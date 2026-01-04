@@ -226,7 +226,11 @@ const Header = ({ setActiveSection, activeSection }) => {
             </div>
 
             <div className="absolute right-0 bottom-0">
-              <img src={Image1} alt="Profile" className="w-[420px]" />
+              <img
+                src={Image1}
+                alt="Profile"
+                className="w-80 md:w-96 lg:w-[420px] max-w-full h-auto"
+              />
             </div>
           </div>
         </div>

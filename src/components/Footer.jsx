@@ -5,7 +5,7 @@ import { FaAutoprefixer } from "react-icons/fa6";
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-black text-gray-100 py-10 px-4">
+    <footer className="w-full bg-black text-gray-100 py-6 sm:py-10 px-4">
       {/* Back To Top */}
       <div
         className="text-center flex items-center justify-center gap-2 text-2xl font-bold cursor-pointer hover:text-gray-300 transition"

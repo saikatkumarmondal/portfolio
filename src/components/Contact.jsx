@@ -123,7 +123,7 @@ const Contact = () => {
         </p>
 
         {/* Separator Line */}
-        <div className="flex justify-center items-center mb-16">
+        <div className="flex justify-center items-center mb-8 sm:mb-16">
           <span className="w-4 h-px bg-black mx-1"></span>
           <span className="w-2 h-px bg-black mx-1"></span>
           <span className="w-4 h-px bg-black mx-1"></span>
@@ -181,7 +181,7 @@ const Contact = () => {
           )}
 
           {/* Submit Button */}
-          <div className="flex justify-center items-center mt-12">
+          <div className="flex justify-center items-center mt-8 sm:mt-12">
             <span className="h-4 w-px bg-black mx-4"></span>
             <button
               type="submit"
