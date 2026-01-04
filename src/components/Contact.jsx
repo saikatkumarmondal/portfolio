@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Mail, Phone, MessageCircle, User } from "lucide-react";
+import emailjs from "@emailjs/browser";
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -21,23 +22,43 @@ const Contact = () => {
     setIsSubmitting(true);
     setSubmissionMessage("");
 
-    // Simulate an API call
-    setTimeout(() => {
-      console.log("Form Submitted:", formData);
+    // Validation
+    if (!formData.name || !formData.email || !formData.message) {
       setIsSubmitting(false);
+      setSubmissionMessage(
+        "Please fill out all required fields (Name, Email, Message)."
+      );
+      return;
+    }
 
-      // Simple validation check
-      if (formData.name && formData.email && formData.message) {
+    // EmailJS configuration - Replace with your actual IDs
+    const serviceId = "your_service_id"; // Replace with your EmailJS service ID
+    const templateId = "your_template_id"; // Replace with your EmailJS template ID
+    const publicKey = "your_public_key"; // Replace with your EmailJS public key
+
+    const templateParams = {
+      from_name: formData.name,
+      from_email: formData.email,
+      phone: formData.phone,
+      message: formData.message,
+      to_email: "mondalsaikatkumar@gmail.com",
+    };
+
+    emailjs
+      .send(serviceId, templateId, templateParams, publicKey)
+      .then((response) => {
+        console.log("Email sent successfully!", response);
+        setIsSubmitting(false);
         setSubmissionMessage(
           "Thank you for your message! We will be in touch soon."
         );
         setFormData({ name: "", email: "", phone: "", message: "" }); // Clear form
-      } else {
-        setSubmissionMessage(
-          "Please fill out all required fields (Name, Email, Message)."
-        );
-      }
-    }, 1500);
+      })
+      .catch((error) => {
+        console.error("Failed to send email:", error);
+        setIsSubmitting(false);
+        setSubmissionMessage("Failed to send message. Please try again later.");
+      });
   };
   // Helper component for the unique input style
   const CustomInput = ({

@@ -46,7 +46,7 @@ const AboutMe = () => {
   ];
 
   return (
-    <div className="bg-gray-100 py-20 px-4 sm:px-6 lg:px-8">
+    <div className="bg-gray-100 py-14 sm:py-20 px-4 sm:px-6 lg:px-8">
       <motion.div
         className="max-w-7xl mx-auto text-center"
         variants={containerVariants}
@@ -55,57 +55,63 @@ const AboutMe = () => {
         viewport={{ once: true, amount: 0.3 }}
       >
         <motion.div
-          className="inline-block border-2 border-black px-10 py-3 mb-10"
+          className="inline-block border-2 border-black px-6 sm:px-10 py-2 sm:py-3 mb-8 sm:mb-10"
           variants={itemVariants}
         >
-          <h2 className="text-2xl font-bold tracking-widest">ABOUT ME</h2>
+          <h2 className="text-xl sm:text-2xl font-bold tracking-widest">
+            ABOUT ME
+          </h2>
         </motion.div>
 
         <motion.p
-          className="max-w-2xl mx-auto text-gray-600 mb-10 text-sm leading-relaxed"
+          className="max-w-2xl mx-auto text-gray-600 mb-8 sm:mb-10 text-sm sm:text-base leading-relaxed"
           variants={itemVariants}
         >
           {placeholderText}
         </motion.p>
 
         <motion.div
-          className="w-20 h-0.5 bg-gray-300 mx-auto transform rotate-1 mb-16"
+          className="w-16 sm:w-20 h-0.5 bg-gray-300 mx-auto transform rotate-1 mb-12 sm:mb-16"
           variants={itemVariants}
         />
 
-        <div className="flex flex-col lg:flex-row justify-center gap-16 mt-16 mb-16">
+        <div className="flex flex-col lg:flex-row justify-center gap-12 sm:gap-16 mt-12 sm:mt-16 mb-12 sm:mb-16">
           {services.map((service, index) => (
             <motion.div
               key={index}
-              className="max-w-xs"
+              className="max-w-xs mx-auto"
               variants={serviceItemVariants}
               transition={{ delay: 0.2 + index * 0.15 }}
             >
-              <service.icon className="text-4xl text-gray-500 mx-auto mb-3" />
-              <h3 className="text-lg font-semibold tracking-wider mb-2">
+              <service.icon className="text-3xl sm:text-4xl text-gray-500 mx-auto mb-3" />
+              <h3 className="text-base sm:text-lg font-semibold tracking-wider mb-2">
                 {service.title}
               </h3>
-              <p className="text-gray-600 text-sm">{service.description}</p>
+              <p className="text-gray-600 text-sm leading-relaxed">
+                {service.description}
+              </p>
             </motion.div>
           ))}
         </div>
 
-        <div className="flex justify-center mb-16">
+        <div className="flex justify-center mb-12 sm:mb-16">
           <motion.div
             className="max-w-xs"
             variants={serviceItemVariants}
             transition={{ delay: 0.5 }}
           >
-            <FaTools className="text-4xl text-gray-500 mx-auto mb-3" />
-            <h3 className="text-lg font-semibold tracking-wider mb-2">
+            <FaTools className="text-3xl sm:text-4xl text-gray-500 mx-auto mb-3" />
+            <h3 className="text-base sm:text-lg font-semibold tracking-wider mb-2">
               MAINTENANCE
             </h3>
-            <p className="text-gray-600 text-sm">{serviceDescription}</p>
+            <p className="text-gray-600 text-sm leading-relaxed">
+              {serviceDescription}
+            </p>
           </motion.div>
         </div>
 
         <motion.div
-          className="w-20 h-0.5 bg-gray-300 mx-auto transform rotate-1"
+          className="w-16 sm:w-20 h-0.5 bg-gray-300 mx-auto transform rotate-1"
           variants={itemVariants}
         />
       </motion.div>

@@ -1,198 +1,236 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image1 from "../assets/mine.png";
 import Image2 from "../assets/img.png";
-import { Github, Linkedin, Mail, Menu, X } from "lucide-react"; // Placeholder image path
+import { Github, Linkedin, Mail, Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
-const Header = () => {
-  const [open, setOpen] = useState(false);
+const Header = ({ setActiveSection, activeSection }) => {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [hideHeader, setHideHeader] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   const profile = {
     name: "Saikat Mondal",
     title: "Full Stack Developer | React | Node.js | MongoDB",
-    imageUrl: "../assets/mine.png",
   };
 
-  const placeholderImage = (text) =>
-    `https://placehold.co/40x40/000000/FFFFFF/png?text=${text}`;
+  /* -------- HIDE HEADER ON SCROLL -------- */
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > lastScrollY && window.scrollY > 80) {
+        setHideHeader(true);
+      } else {
+        setHideHeader(false);
+      }
+      setLastScrollY(window.scrollY);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
 
   return (
-    <div className="relative w-full min-h-screen flex flex-col">
-      {/* ---------------- MOBILE HEADER (Fixed Top) ---------------- */}
-      <div className="sm:hidden w-full h-16 bg-black flex justify-between items-center px-4 z-50 fixed top-0 left-0 shadow-lg">
-        <h1 className="text-white w-10 h-10 font-extrabold text-2xl tracking-widest">
-          <img src={Image2} alt="Logo" />
-        </h1>
-
-        <button onClick={() => setOpen(!open)} className="text-white p-2">
-          {open ? <X size={28} /> : <Menu size={28} />}
+    <div className="relative w-full flex flex-col">
+      {/* ---------------- MOBILE HEADER ---------------- */}
+      <div className="sm:hidden fixed top-0 left-0 w-full h-16 bg-black flex justify-between items-center px-4 z-50">
+        <img src={Image2} alt="Logo" className="w-8 h-8" />
+        <button
+          onClick={() => setDrawerOpen(!drawerOpen)}
+          className="text-white p-2"
+        >
+          {drawerOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
 
-      {/* Mobile menu dropdown */}
-      {open && (
-        <div className="sm:hidden fixed top-16 left-0 w-full bg-black/95 backdrop-blur-sm text-white p-6 space-y-4 z-40 shadow-xl transition-opacity duration-300">
-          <a
-            href="#about"
-            className="block text-lg font-medium hover:text-gray-300"
-          >
-            About
-          </a>
-          <a
-            href="#skills"
-            className="block text-lg font-medium hover:text-gray-300"
-          >
-            Skills
-          </a>
-          <a
-            href="#projects"
-            className="block text-lg font-medium hover:text-gray-300"
-          >
-            Projects
-          </a>
+      {/* ---------------- MOBILE DRAWER ---------------- */}
+      <AnimatePresence>
+        {drawerOpen && (
+          <>
+            <motion.div
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "tween", duration: 0.3 }}
+              className="fixed top-0 left-0 h-full w-64 bg-black z-50 flex flex-col p-6 shadow-2xl border-r border-gray-700"
+            >
+              <button
+                onClick={() => setDrawerOpen(false)}
+                className="self-end mb-4 text-white hover:text-gray-300 transition-colors duration-200"
+              >
+                <X size={28} />
+              </button>
+              <a
+                onClick={() => {
+                  setActiveSection("home");
+                  setDrawerOpen(false);
+                }}
+                className={`block text-lg font-semibold ${
+                  activeSection === "home"
+                    ? "text-blue-400 bg-gray-800"
+                    : "text-white"
+                } hover:text-gray-300 cursor-pointer mb-4 transition-colors duration-200 px-3 py-2 rounded`}
+              >
+                Home
+              </a>
+              <a
+                onClick={() => {
+                  setActiveSection("about");
+                  setDrawerOpen(false);
+                }}
+                className={`block text-lg font-semibold ${
+                  activeSection === "about"
+                    ? "text-blue-400 bg-gray-800"
+                    : "text-white"
+                } hover:text-gray-300 cursor-pointer mb-4 transition-colors duration-200 px-3 py-2 rounded`}
+              >
+                About
+              </a>
+              <a
+                onClick={() => {
+                  setActiveSection("skills");
+                  setDrawerOpen(false);
+                }}
+                className={`block text-lg font-semibold ${
+                  activeSection === "skills"
+                    ? "text-blue-400 bg-gray-800"
+                    : "text-white"
+                } hover:text-gray-300 cursor-pointer mb-4 transition-colors duration-200 px-3 py-2 rounded`}
+              >
+                Skills
+              </a>
+              <a
+                onClick={() => {
+                  setActiveSection("projects");
+                  setDrawerOpen(false);
+                }}
+                className={`block text-lg font-semibold ${
+                  activeSection === "projects"
+                    ? "text-blue-400 bg-gray-800"
+                    : "text-white"
+                } hover:text-gray-300 cursor-pointer mb-4 transition-colors duration-200 px-3 py-2 rounded`}
+              >
+                Projects
+              </a>
+              <button
+                onClick={() => {
+                  setActiveSection("contact");
+                  setDrawerOpen(false);
+                }}
+                className={`px-4 py-2 rounded-full mt-4 transition-colors duration-200 ${
+                  activeSection === "contact"
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-300 text-black"
+                } hover:bg-gray-400`}
+              >
+                Contact Me
+              </button>
+              <div className="flex gap-4 mt-auto">
+                <a href="mailto:mondalsaikatkumar@gmail.com">
+                  <Mail className="w-5 h-5 text-white hover:text-blue-500 cursor-pointer transition-colors duration-200" />
+                </a>
+                <a
+                  href="https://github.com/saikatkumarmondal"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Github className="w-5 h-5 text-white hover:text-blue-500 cursor-pointer transition-colors duration-200" />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/saikatkumar421/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Linkedin className="w-5 h-5 text-white hover:text-blue-500 cursor-pointer transition-colors duration-200" />
+                </a>
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/50 z-40"
+              onClick={() => setDrawerOpen(false)}
+            />
+          </>
+        )}
+      </AnimatePresence>
 
-          <div className="flex gap-4 pt-4 border-t border-gray-700">
-            <a href="mailto:mondalsaikatkumar@gmail.com">
-              <Mail className="w-5 h-5 text-white hover:text-blue-500 cursor-pointer transition-colors duration-300 ease-in-out" />
-            </a>
-            <a
-              href="https://github.com/saikatkumarmondal"
-              target="_blank"
-              rel="noopener noreferrer"
+      {/* ---------------- DESKTOP HEADER ---------------- */}
+      <div
+        className={`hidden sm:flex fixed top-0 left-0 w-full z-50 px-6 md:px-12 py-6 transition-transform duration-300 ${
+          hideHeader ? "-translate-y-full" : "translate-y-0"
+        }`}
+      >
+        <img src={Image2} alt="Logo" className="w-10 h-10" />
+
+        <div className="ml-auto flex items-center gap-8 text-white">
+          {["home", "about", "skills", "projects"].map((item) => (
+            <span
+              key={item}
+              onClick={() => setActiveSection(item)}
+              className="cursor-pointer hover:text-gray-300"
             >
-              <Github className="w-5 h-5 text-white hover:text-blue-500 cursor-pointer transition-colors duration-300 ease-in-out" />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/saikatkumar421/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Linkedin className="w-5 h-5 text-white hover:text-blue-500 cursor-pointer transition-colors duration-300 ease-in-out" />
-            </a>
+              {item.toUpperCase()}
+            </span>
+          ))}
+          <button className="bg-white text-black px-5 py-2 rounded-full">
+            CONTACT ME
+          </button>
+        </div>
+      </div>
+
+      {/* ---------------- MOBILE HOME (GAP FIXED) ---------------- */}
+      {activeSection === "home" && (
+        <main className="sm:hidden w-full h-auto pt-16 bg-black">
+          {/* IMAGE */}
+          <div className="w-full h-auto flex justify-center items-end">
+            <img
+              src={Image1}
+              alt="Profile"
+              className="w-[80%] max-w-xs object-cover"
+            />
+          </div>
+
+          {/* INFO CARD */}
+          <div className="bg-gray-800 px-6 py-10 -mt-12 text-white">
+            <p className="text-sm mt-2">Hi, I am</p>
+            <h2 className="text-2xl font-bold">{profile.name}</h2>
+            <p className="text-gray-300 text-sm mt-1">{profile.title}</p>
+
+            <div className="flex gap-4 mt-6">
+              <Mail />
+              <Github />
+              <Linkedin />
+            </div>
+          </div>
+        </main>
+      )}
+
+      {/* ---------------- DESKTOP HOME ---------------- */}
+      {activeSection === "home" && (
+        <div className="hidden sm:flex relative w-full h-screen">
+          <div
+            className="absolute top-0 left-0 h-full w-full bg-gray-200 z-10"
+            style={{
+              clipPath: "polygon(0 0, 53% 0, 35% 100%, 0% 100%)",
+            }}
+          />
+          <div className="absolute inset-0 bg-black z-0" />
+
+          <div className="relative z-20 flex w-full max-w-7xl mx-auto h-full">
+            <div className="w-1/2 flex flex-col justify-center px-12">
+              <p className="text-lg text-black">Hi, I am</p>
+              <h1 className="text-6xl font-bold text-black">Saikat Mondal</h1>
+              <p className="text-gray-500 mt-2">
+                Full Stack Developer | React | Node.js | MongoDB
+              </p>
+            </div>
+
+            <div className="absolute right-0 bottom-0">
+              <img src={Image1} alt="Profile" className="w-[420px]" />
+            </div>
           </div>
         </div>
       )}
-
-      {/* ---------------- MOBILE PROFILE CONTENT ---------------- */}
-      <main className="sm:hidden w-full min-h-screen pt-16 bg-black flex flex-col items-center relative z-10">
-        <div className="w-full h-[55vh] bg-black relative overflow-hidden">
-          <div className="absolute inset-0 flex justify-center items-end p-0">
-            <img
-              src={Image1}
-              alt="Profile"
-              className="w-[85%] max-w-sm h-auto object-cover shadow-2xl rounded-t-xl"
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = placeholderImage("Profile");
-              }}
-            />
-          </div>
-        </div>
-
-        <div
-          className="w-full bg-gray-800 pt-20 pb-16 relative mt-[-100px] z-20"
-          style={{
-            clipPath: "polygon(0 0, 100% 0, 100% 100%, 0% 100%)",
-            background:
-              "linear-gradient(to top right, #333333 40%, #4a4a4a 100%)",
-          }}
-        >
-          <div className="max-w-md mx-auto px-6 text-white text-left">
-            <p className="text-sm font-light mb-1">Hi, I am</p>
-            <h2 className="text-3xl font-extrabold mb-1">{profile.name}</h2>
-            <p className="text-base font-medium text-gray-300">
-              {profile.title}
-            </p>
-          </div>
-
-          <div className="absolute right-8 bottom-16 flex flex-col space-y-4 text-gray-200">
-            <Mail className="w-6 h-6 hover:text-blue-500 cursor-pointer transition-colors duration-300 ease-in-out" />
-            <Github className="w-6 h-6 hover:text-blue-500 cursor-pointer transition-colors duration-300 ease-in-out" />
-            <Linkedin className="w-6 h-6 hover:text-blue-500 cursor-pointer transition-colors duration-300 ease-in-out" />
-          </div>
-        </div>
-      </main>
-
-      {/* ---------------- DESKTOP VIEW ---------------- */}
-      <div className="hidden sm:flex relative w-full h-screen">
-        <div
-          className="absolute top-0 left-0 h-full w-full bg-gray-200 z-10"
-          style={{
-            clipPath: "polygon(0 0, 53% 0, 35% 100%, 0% 100%)",
-          }}
-        ></div>
-
-        <div className="absolute top-0 left-0 h-full w-full bg-black z-0"></div>
-
-        <div className="absolute top-0 left-0 w-full flex justify-between items-center px-6 md:px-12 py-6 z-30">
-          <div className="text-black font-bold text-xl ml-4 md:ml-10">
-            <img src={Image2} alt="Logo" className="w-10 h-10 rounded-full" />
-          </div>
-
-          <div className="hidden sm:flex items-center gap-6 md:gap-8 text-white">
-            <a href="#about" className="hover:text-gray-300">
-              About
-            </a>
-            <a href="#skills" className="hover:text-gray-300">
-              Skills
-            </a>
-            <a href="#projects" className="hover:text-gray-300">
-              Projects
-            </a>
-            <button className="bg-gray-300 text-black px-4 py-2 rounded-full hover:bg-gray-400">
-              Contact Me
-            </button>
-          </div>
-        </div>
-
-        <div className="relative z-20 flex flex-col md:flex-row w-full max-w-7xl mx-auto h-full">
-          <div className="w-full md:w-1/2 flex flex-col justify-center px-6 md:px-12 text-left mt-28 sm:mt-32 md:mt-0">
-            <h2 className="text-lg sm:text-xl font-medium mb-2 text-black">
-              Hi, I am
-            </h2>
-
-            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-2 text-black leading-tight">
-              Saikat Mondal
-            </h1>
-
-            <p className="text-gray-500 mb-4 max-w-sm text-sm sm:text-base">
-              Full Stack Developer | React | Node.js | MongoDB
-            </p>
-
-            <div className="flex gap-4 mt-2">
-              <a
-                href="mailto:mondalsaikatkumar@gmail.com"
-                className="cursor-pointer hover:text-blue-500"
-              >
-                <Mail className="w-5 h-5 text-white hover:text-blue-500 cursor-pointer transition-colors duration-300 ease-in-out" />
-              </a>
-              <a
-                href="https://github.com/saikatkumarmondal"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="cursor-pointer hover:text-blue-500"
-              >
-                <Github className="w-5 h-5 text-white hover:text-blue-500 cursor-pointer transition-colors duration-300 ease-in-out" />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/saikatkumar421/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="cursor-pointer hover:text-blue-500"
-              >
-                <Linkedin className="w-5 h-5 text-white hover:text-blue-500 cursor-pointer transition-colors duration-300 ease-in-out" />
-              </a>
-            </div>
-          </div>
-
-          <div className="w-full md:absolute md:w-200 flex justify-center md:justify-end items-center px-6 md:px-12 mt-10 sm:mt-20 md:mt-0">
-            <img
-              src={Image1}
-              alt="Profile"
-              className="w-64 sm:w-80 md:w-200 h-auto md:relative md:left-140 md:-bottom-10"
-            />
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
