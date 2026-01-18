@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Mail, Phone, MessageCircle, User } from "lucide-react";
 import emailjs from "@emailjs/browser";
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -26,7 +27,7 @@ const Contact = () => {
     if (!formData.name || !formData.email || !formData.message) {
       setIsSubmitting(false);
       setSubmissionMessage(
-        "Please fill out all required fields (Name, Email, Message)."
+        "Please fill out all required fields (Name, Email, Message).",
       );
       return;
     }
@@ -50,7 +51,7 @@ const Contact = () => {
         console.log("Email sent successfully!", response);
         setIsSubmitting(false);
         setSubmissionMessage(
-          "Thank you for your message! We will be in touch soon."
+          "Thank you for your message! We will be in touch soon.",
         );
         setFormData({ name: "", email: "", phone: "", message: "" }); // Clear form
       })
@@ -60,6 +61,7 @@ const Contact = () => {
         setSubmissionMessage("Failed to send message. Please try again later.");
       });
   };
+
   // Helper component for the unique input style
   const CustomInput = ({
     id,
@@ -104,9 +106,9 @@ const Contact = () => {
   );
 
   return (
-    // Outer container with light background and full viewport height
-    <div className="min-h-screen bg-neutral-50 flex items-center justify-center p-4 sm:p-8 font-['Inter']">
-      {/* Centered content area - Max width based on image layout */}
+    // Outer container with mt-20 and mobile padding preserved
+    <div className="min-h-screen bg-neutral-50 flex items-center justify-center p-4 mt-20 sm:p-8 font-['Inter']">
+      {/* Centered content area */}
       <div className="w-full max-w-2xl text-center">
         {/* Title Box */}
         <div className="inline-block border border-black px-6 py-2 mb-8 rounded-sm">

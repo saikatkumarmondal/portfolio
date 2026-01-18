@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const ITBERRIES = () => {
   return (
-    <div className="w-full h-auto sm:h-80 bg-black text-white px-4 sm:px-6 py-10 flex flex-col justify-center items-start gap-4">
+    <div className="w-full h-auto sm:h-80 bg-black text-white px-4 sm:px-6 mt-20 py-10 flex flex-col justify-center items-start gap-4">
       <motion.h1
         className="text-2xl sm:text-4xl font-bold"
         initial={{ opacity: 0, x: -50 }}

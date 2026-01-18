@@ -65,7 +65,7 @@ const Skills = () => {
   ];
 
   const renderSkillSet = (title, skills, delayOffset = 0) => (
-    <div className="mb-16">
+    <div className="mb-16 mt-20">
       <motion.h3
         className="text-lg sm:text-xl font-bold text-gray-800 text-left mb-8 pl-4 sm:pl-0"
         variants={itemVariants}
@@ -94,7 +94,8 @@ const Skills = () => {
   );
 
   return (
-    <div className="bg-gray-100 py-10 sm:py-16 px-4 sm:px-6 lg:px-8">
+    /* Added mt-20 to the root div for mobile devices */
+    <div className="bg-gray-100 py-10 sm:py-16 px-4 sm:px-6 mt-20 lg:px-8">
       <motion.div
         className="max-w-7xl mx-auto text-center"
         variants={containerVariants}

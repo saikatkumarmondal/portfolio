@@ -27,7 +27,7 @@ const Project = () => {
   const images = [img1, img2, img3, img4];
 
   return (
-    <div className="bg-gray-100 py-10 sm:py-16 px-4 sm:px-6 lg:px-8">
+    <div className="bg-gray-100 py-10 sm:py-16 px-4 sm:px-6 mt-20 lg:px-8">
       <motion.div
         className="max-w-7xl mx-auto text-center"
         variants={containerVariants}

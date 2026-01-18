@@ -46,7 +46,8 @@ const AboutMe = () => {
   ];
 
   return (
-    <div className="bg-gray-100 py-10 sm:py-16 px-4 sm:px-6 lg:px-8">
+    /* Added mt-20 here as requested and kept mobile structure */
+    <div className="bg-gray-100 py-10 sm:py-16 px-4 sm:px-6 mt-20 lg:px-8">
       <motion.div
         className="max-w-7xl mx-auto text-center"
         variants={containerVariants}
